@@ -18,7 +18,7 @@ Arguments:
 Examples:
   rights 755           # Explain numeric permissions
   rights rwxr-xr-x     # Explain symbolic permissions
-  rights /dev/video0   # Show permissions of existing file
+  rights /dev/video0   # Show file permissions
 ```
 
 # Examples
@@ -104,4 +104,4 @@ Numeric:             660
 # Requirements
 
 - Perl 5.10 or newer (given/when feature)
-- `ls` program (optional, for show permissions of existing file)
+- `ls` program (optional, for showing file permissions)
