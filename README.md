@@ -104,4 +104,4 @@ Numeric:             660
 # Requirements
 
 - Perl 5.10 or newer (given/when feature)
-- `ls` program (optional, for showing file permissions)
+- `ls` program (optional for most modes, required for file/directory arguments)
