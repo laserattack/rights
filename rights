@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use feature 'say';
+use feature qw\say switch\;
 
 sub usage {
     say "What is it : Linux file permissions explainer";
@@ -18,7 +18,7 @@ sub usage {
     say "  rights rwxr-xr-x  Explain symbolic permissions";
 }
 
-sub symbolic_symbolic_perm {
+sub explain_symbolic_perm {
     my ($perm) = @_;
     my $type   = $perm->{type} // '-';
     my $own_r  = $perm->{own_r};
@@ -31,6 +31,70 @@ sub symbolic_symbolic_perm {
     my $oth_w  = $perm->{oth_w};
     my $oth_x  = $perm->{oth_x};
     my $suffix = $perm->{suffix} // '';
+
+    print "File type:           ";
+    given ($type) {
+        when ('-') { say "regular file" }
+        when ('d') { say "directory" }
+        when ('l') { say "symbolic link" }
+        when ('p') { say "named pipe" }
+        when ('c') { say "character device" }
+        when ('b') { say "block device" }
+        when ('s') { say "socket" }
+        when ('')  { say "not specified" }
+    }
+
+    print "Owner permissions:   ";
+    given ($own_r) {
+        when ('r') { print "read, " }
+        when ('-') { print "no read, " }
+    }
+    given ($own_w) {
+        when ('w') { print "write, " }
+        when ('-') { print "no write, " }
+    }
+    given ($own_x) {
+        when ('x') { say "execute" }
+        when ('s') { say "execute with suid (run as file owner)" }
+        when ('-') { say "no execute" }
+    }
+
+    print "Group permissions:   ";
+    given ($grp_r) {
+        when ('r') { print "read, " }
+        when ('-') { print "no read, " }
+    }
+    given ($grp_w) {
+        when ('w') { print "write, " }
+        when ('-') { print "no write, " }
+    }
+    given ($grp_x) {
+        when ('x') { say "execute" }
+        when ('s') { say "execute with sgid (run as group member)" }
+        when ('-') { say "no execute" }
+    }
+    
+    print "Others permissions:  ";
+    given ($oth_r) {
+        when ('r') { print "read, " }
+        when ('-') { print "no read, " }
+    }
+    given ($oth_w) {
+        when ('w') { print "write, " }
+        when ('-') { print "no write, " }
+    }
+    given ($oth_x) {
+        when ('x') { say "execute" }
+        when ('t') { say "sticky bit (for directories: only owner or root can delete files)" }
+        when ('-') { say "no execute" }
+    }
+
+    print "Suffix:              ";
+    given ($suffix) {
+        when ('+') { say "ACL present (Access Control Lists)" }
+        when ('.') { say "SELinux context present" }
+        when ('')  { say "not specified" }
+    }
 }
 
 sub explain_numeric_perm {
