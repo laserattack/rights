@@ -1,4 +1,4 @@
-# rights - Linux File Permissions Explainer
+# rights - Linux file permissions explainer 
 
 ```
 What is it : Linux file permissions explainer
