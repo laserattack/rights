@@ -34,7 +34,7 @@ sub symbolic_symbolic_perm {
 }
 
 sub explain_numeric_perm {
-
+    
 }
 
 sub explain {
@@ -50,7 +50,7 @@ sub explain {
             suffix => $11
         });
     } else {
-        say "ERROR: Incorrect arg format";
+        say "ERROR: Incorrect permissions format";
         usage();
         exit 1;
     }
