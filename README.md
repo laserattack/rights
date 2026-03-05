@@ -1,20 +1,29 @@
 # rights - Linux file permissions explainer
 
+A simple Perl script to explain Linux file permissions in human-readable format
+
+**rights** takes file permissions in various formats (numeric, symbolic, or actual file path) and explains what they mean - who can read, write, execute, and what special bits are set
+
+# Usage
+
 ```
 What is it : Linux file permissions explainer
-Usage      : rights PERMISSIONS
+Usage      : rights ARGUMENTS
 
 Arguments:
-  PERMISSIONS  File permissions in various formats:
-               Symbolic : rwxr-xr-x, rw-------, r-x--x--x
-               Numeric  : 755, 644, 777, 600, 444
+  Symbolic permissions : rwxr-xr-x, rw-------, r-x--x--x
+  Numeric permissions  : 755, 644, 777, 600, 444
+  File/directory path  : /dev/video0, script.sh, /tmp
 
 Examples:
-  rights 755        Explain what 755 means
-  rights rwxr-xr-x  Explain symbolic permissions
+  rights 755           # Explain numeric permissions
+  rights rwxr-xr-x     # Explain symbolic permissions
+  rights /dev/video0   # Show permissions of existing file
 ```
 
 # Examples
+
+## Explain numeric permissions
 
 ```
 ~/projects/right
@@ -40,6 +49,8 @@ Symbolic:            r-sr-xrwt
 Numeric:             5557
 ```
 
+## Explain symbolic permissions
+
 ```
 ~/projects/right
 [serr@lap]-> ./rights rwsr-sr-t
@@ -64,6 +75,33 @@ Symbolic:            crw-rw----+
 Numeric:             660
 ```
 
+## Show permissions of existing file
+
+```
+~/projects/rights
+[serr@lap]-> rights /
+File type:           directory
+Owner permissions:   read, write, execute
+Group permissions:   read, no write, execute
+Others permissions:  read, no write, execute
+Suffix:              not specified
+Symbolic:            drwxr-xr-x
+Numeric:             755
+```
+
+```
+~/projects/rights
+[serr@lap]-> rights /dev/video0
+File type:           character device
+Owner permissions:   read, write, no execute
+Group permissions:   read, write, no execute
+Others permissions:  no read, no write, no execute
+Suffix:              ACL present (Access Control Lists)
+Symbolic:            crw-rw----+
+Numeric:             660
+```
+
 # Requirements
 
-Perl 5.10 or newer (given/when feature)
+- Perl 5.10 or newer (given/when feature)
+- `ls` program (optional, for show permissions of existing file)
