@@ -1,6 +1,6 @@
 # rights - Linux file permissions explainer
 
-A simple Perl script to explain Linux file permissions in human-readable format
+A simple script to explain Linux file permissions in human-readable format
 
 **rights** takes file permissions in various formats (numeric, symbolic, or actual file path) and explains what they mean - who can read, write, execute, and what special bits are set
 
