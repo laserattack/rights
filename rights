@@ -73,7 +73,7 @@ sub explain_symbolic_perm {
         when ('s') { say "execute with sgid (run as group member)" }
         when ('-') { say "no execute" }
     }
-    
+
     print "Others permissions:  ";
     given ($oth_r) {
         when ('r') { print "read, " }
@@ -95,17 +95,66 @@ sub explain_symbolic_perm {
         when ('.') { say "SELinux context present" }
         when ('')  { say "not specified" }
     }
+
+    my $symbolic = $type.$own_r.$own_w.$own_x.$grp_r.$grp_w.$grp_x.$oth_r.$oth_w.$oth_x.$suffix;
+    print "Symbolic:            $symbolic\n";
+    
+    print "Numeric:             ";
+    my $own_num = 0;
+    $own_num += 4 if $own_r eq 'r';
+    $own_num += 2 if $own_w eq 'w';
+    $own_num += 1 if $own_x =~ /[xs]/;
+    my $grp_num = 0;
+    $grp_num += 4 if $grp_r eq 'r';
+    $grp_num += 2 if $grp_w eq 'w';
+    $grp_num += 1 if $grp_x =~ /[xs]/;
+    my $oth_num = 0;
+    $oth_num += 4 if $oth_r eq 'r';
+    $oth_num += 2 if $oth_w eq 'w';
+    $oth_num += 1 if $oth_x =~ /[xt]/;
+    my $special = 0;
+    $special += 4 if $own_x =~ /[s]/;
+    $special += 2 if $grp_x =~ /[s]/;
+    $special += 1 if $oth_x =~ /[t]/;
+    if ($special > 0) {
+        printf "%d%d%d%d\n", $special, $own_num, $grp_num, $oth_num;
+    } else {
+        printf "%d%d%d\n", $own_num, $grp_num, $oth_num;
+    }
 }
 
 sub explain_numeric_perm {
-    
+    my ($num) = @_;
+    my ($special, $owner, $group, $other) = (0, 0, 0, 0);
+
+    if (length($num) == 3) {
+        ($owner, $group, $other) = split //, $num;
+    } elsif (length($num) == 4) {
+        ($special, $owner, $group, $other) = split //, $num;
+    }
+
+    my %perm = (
+        type   => '',
+        own_r  => ($owner & 4)? 'r': '-',
+        own_w  => ($owner & 2)? 'w': '-',
+        own_x  => ($owner & 1)? (($special & 4)? 's': 'x'): '-',
+        grp_r  => ($group & 4)? 'r': '-',
+        grp_w  => ($group & 2)? 'w': '-',
+        grp_x  => ($group & 1)? (($special & 2)? 's': 'x'): '-',
+        oth_r  => ($other & 4)? 'r': '-',
+        oth_w  => ($other & 2)? 'w': '-',
+        oth_x  => ($other & 1)? (($special & 1)? 't': 'x'): '-',
+        suffix => '',
+    );
+
+    explain_symbolic_perm(\%perm);
 }
 
 sub explain {
     my ($arg) = @_;
     if ($arg =~ /^[0-7]{3,4}$/) {
         explain_numeric_perm($arg);
-    } elsif ($arg =~ /^([-dlscbp]?)([r-])([w-])([xsS-])([r-])([w-])([xsS-])([r-])([w-])([xtT-])([+\.]?)$/) {
+    } elsif ($arg =~ /^([-dlscbp]?)([r-])([w-])([xs-])([r-])([w-])([xs-])([r-])([w-])([xt-])([+\.]?)$/) {
         explain_symbolic_perm({
             type  => $1,
             own_r => $2, own_w => $3, own_x => $4,
@@ -121,7 +170,10 @@ sub explain {
 }
 
 sub main {
-    explain($_) for @ARGV;
+    for my $i (0..$#ARGV) {
+        explain($ARGV[$i]);
+        say "" if $i < $#ARGV;
+    }
     exit 0;
 }
 
