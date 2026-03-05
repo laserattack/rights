@@ -203,7 +203,7 @@ sub explain {
     if (-e $arg) {
         my $ls  = check_command('ls');
         unless ($ls) {
-            say "ERROR: program 'ls' need for check file rights";
+            say "ERROR: Program 'ls' need for check file rights";
             exit 1;
         }
         
