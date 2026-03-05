@@ -26,8 +26,8 @@ Examples:
 ## Explain numeric permissions
 
 ```
-~/projects/right
-[serr@lap]-> ./rights 505
+~
+[serr@lap]-> rights 505
 File type:           not specified
 Owner permissions:   read, no write, execute
 Group permissions:   no read, no write, no execute
@@ -38,12 +38,12 @@ Numeric:             505
 ```
 
 ```
-~/projects/right
+~
 [serr@lap]-> rights 5557
 File type:           not specified
 Owner permissions:   read, no write, execute with suid (run as file owner)
 Group permissions:   read, no write, execute
-Others permissions:  read, write, sticky bit (for directories: only owner or root can delete files)
+Others permissions:  read, write, sticky bit (for directories: only file owner or root can delete files)
 Suffix:              not specified
 Symbolic:            r-sr-xrwt
 Numeric:             5557
@@ -52,20 +52,20 @@ Numeric:             5557
 ## Explain symbolic permissions
 
 ```
-~/projects/right
-[serr@lap]-> ./rights rwsr-sr-t
+~
+[serr@lap]-> rights rwsr-sr-t
 File type:           not specified
 Owner permissions:   read, write, execute with suid (run as file owner)
 Group permissions:   read, no write, execute with sgid (run as group member)
-Others permissions:  read, no write, sticky bit (for directories: only owner or root can delete files)
+Others permissions:  read, no write, sticky bit (for directories: only file owner or root can delete files)
 Suffix:              not specified
 Symbolic:            rwsr-sr-t
 Numeric:             7755
 ```
 
 ```
-~/projects/right
-[serr@lap]-> ./rights crw-rw----+
+~
+[serr@lap]-> rights crw-rw----+
 File type:           character device
 Owner permissions:   read, write, no execute
 Group permissions:   read, write, no execute
@@ -78,7 +78,7 @@ Numeric:             660
 ## Explain file permissions
 
 ```
-~/projects/rights
+~
 [serr@lap]-> rights /
 File type:           directory
 Owner permissions:   read, write, execute
@@ -90,7 +90,7 @@ Numeric:             755
 ```
 
 ```
-~/projects/rights
+~
 [serr@lap]-> rights /dev/video0
 File type:           character device
 Owner permissions:   read, write, no execute
