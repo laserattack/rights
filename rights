@@ -106,15 +106,15 @@ sub explain_symbolic_perm {
     my $own_num = 0;
     $own_num += 4 if $own_r eq 'r';
     $own_num += 2 if $own_w eq 'w';
-    $own_num += 1 if $own_x =~ /[xsS]/;
+    $own_num += 1 if $own_x =~ /[xs]/;
     my $grp_num = 0;
     $grp_num += 4 if $grp_r eq 'r';
     $grp_num += 2 if $grp_w eq 'w';
-    $grp_num += 1 if $grp_x =~ /[xsS]/;
+    $grp_num += 1 if $grp_x =~ /[xs]/;
     my $oth_num = 0;
     $oth_num += 4 if $oth_r eq 'r';
     $oth_num += 2 if $oth_w eq 'w';
-    $oth_num += 1 if $oth_x =~ /[xtT]/;
+    $oth_num += 1 if $oth_x =~ /[xt]/;
     my $special = 0;
     $special += 4 if $own_x =~ /[sS]/;
     $special += 2 if $grp_x =~ /[sS]/;
@@ -138,15 +138,33 @@ sub explain_numeric_perm {
 
     my %perm = (
         type   => '',
-        own_r  => ($owner & 4)? 'r': '-',
-        own_w  => ($owner & 2)? 'w': '-',
-        own_x  => ($owner & 1)? (($special & 4)? 's': 'x'): (($special & 4)? 'S': '-'),
-        grp_r  => ($group & 4)? 'r': '-',
-        grp_w  => ($group & 2)? 'w': '-',
-        grp_x  => ($group & 1)? (($special & 2)? 's': 'x'): (($special & 2)? 'S': '-'),
-        oth_r  => ($other & 4)? 'r': '-',
-        oth_w  => ($other & 2)? 'w': '-',
-        oth_x  => ($other & 1)? (($special & 1)? 't': 'x'): (($special & 1)? 'T': '-'),
+        own_r  => ($owner & 4) ? 'r' : '-',
+        own_w  => ($owner & 2) ? 'w' : '-',
+        own_x  => do {
+            if ($owner & 1) {
+                ($special & 4) ? 's' : 'x';
+            } else {
+                ($special & 4) ? 'S' : '-';
+            }
+        },
+        grp_r  => ($group & 4) ? 'r' : '-',
+        grp_w  => ($group & 2) ? 'w' : '-',
+        grp_x  => do {
+            if ($group & 1) {
+                ($special & 2) ? 's' : 'x';
+            } else {
+                ($special & 2) ? 'S' : '-';
+            }
+        },
+        oth_r  => ($other & 4) ? 'r' : '-',
+        oth_w  => ($other & 2) ? 'w' : '-',
+        oth_x  => do {
+            if ($other & 1) {
+                ($special & 1) ? 't' : 'x';
+            } else {
+                ($special & 1) ? 'T' : '-';
+            }
+        },
         suffix => '',
     );
 
@@ -155,7 +173,12 @@ sub explain_numeric_perm {
 
 sub explain {
     my ($arg) = @_;
-    if ($arg =~ /^[0-7]{3,4}$/) {
+
+    if (-e $arg) {
+        my @stat = stat($arg);
+        my $mode = $stat[2] & 07777;
+        explain_numeric_perm(sprintf "%o", $mode);
+    } elsif ($arg =~ /^[0-7]{3,4}$/) {
         explain_numeric_perm($arg);
     } elsif ($arg =~ /^([-dlscbp]?)([r-])([w-])([xsS-])([r-])([w-])([xsS-])([r-])([w-])([xtT-])([+\.]?)$/) {
         explain_symbolic_perm({
