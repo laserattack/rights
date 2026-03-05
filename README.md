@@ -103,5 +103,5 @@ Numeric:             660
 
 # Requirements
 
-- Perl 5.10 or newer (given/when feature)
+- Perl 5.10 or newer
 - `ls` program (optional for most modes, required for file/directory arguments)
