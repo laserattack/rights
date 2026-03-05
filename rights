@@ -26,7 +26,7 @@ sub usage {
     say "Examples:";
     say "  rights 755           # Explain numeric permissions";
     say "  rights rwxr-xr-x     # Explain symbolic permissions";
-    say "  rights /dev/video0   # Show file permissions";
+    say "  rights /dev/video0   # Explain file permissions";
 }
 
 sub explain_symbolic_perm {
@@ -203,7 +203,7 @@ sub explain {
     if (-e $arg) {
         my $ls  = check_command('ls');
         unless ($ls) {
-            say "ERROR: Program 'ls' need for check file rights";
+            say "ERROR: Program 'ls' is required to check file permissions";
             exit 1;
         }
         

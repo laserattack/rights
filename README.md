@@ -18,7 +18,7 @@ Arguments:
 Examples:
   rights 755           # Explain numeric permissions
   rights rwxr-xr-x     # Explain symbolic permissions
-  rights /dev/video0   # Show file permissions
+  rights /dev/video0   # Explain file permissions
 ```
 
 # Examples
@@ -75,7 +75,7 @@ Symbolic:            crw-rw----+
 Numeric:             660
 ```
 
-## Show permissions of existing file
+## Explain file permissions
 
 ```
 ~/projects/rights
