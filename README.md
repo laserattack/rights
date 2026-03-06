@@ -128,6 +128,11 @@ Just download somewhere
 
 ```
 wget https://raw.githubusercontent.com/laserattack/rights/refs/heads/master/rights
+```
+
+Make it executable
+
+```
 chmod +x rights
 ```
 
