@@ -114,7 +114,7 @@ Numeric:             660
 ## Quiet mode
 
 ```
-~/projects/rights
+~
 [serr@lap]-> ./rights -q 755 r-x--x--x /tmp
 rwxr-xr-x 755
 r-x--x--x 511
