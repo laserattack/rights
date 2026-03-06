@@ -29,9 +29,10 @@ Examples:
 ~
 [serr@lap]-> rights 505
 File type:           not specified
-Owner permissions:   read, no write, execute
+Special bits:        no suid, no sgid, no sticky
+Owner permissions:   read (+4), no write, execute (+1)
 Group permissions:   no read, no write, no execute
-Others permissions:  read, no write, execute
+Others permissions:  read (+4), no write, execute (+1)
 Suffix:              not specified
 Symbolic:            r-x---r-x
 Numeric:             505
@@ -41,9 +42,10 @@ Numeric:             505
 ~
 [serr@lap]-> rights 5557
 File type:           not specified
-Owner permissions:   read, no write, execute with suid (run as file owner)
-Group permissions:   read, no write, execute
-Others permissions:  read, write, sticky bit (for directories: only file owner or root can delete files)
+Special bits:        suid (+4), no sgid, sticky (+1)
+Owner permissions:   read (+4), no write, execute with suid (run as file owner) (+1)
+Group permissions:   read (+4), no write, execute (+1)
+Others permissions:  read (+4), write (+2), sticky (for directories: only file owner or root can delete files) (+1)
 Suffix:              not specified
 Symbolic:            r-sr-xrwt
 Numeric:             5557
@@ -55,9 +57,10 @@ Numeric:             5557
 ~
 [serr@lap]-> rights rwsr-sr-t
 File type:           not specified
-Owner permissions:   read, write, execute with suid (run as file owner)
-Group permissions:   read, no write, execute with sgid (run as group member)
-Others permissions:  read, no write, sticky bit (for directories: only file owner or root can delete files)
+Special bits:        suid (+4), sgid (+2), sticky (+1)
+Owner permissions:   read (+4), write (+2), execute with suid (run as file owner) (+1)
+Group permissions:   read (+4), no write, execute with sgid (run as group member) (+1)
+Others permissions:  read (+4), no write, sticky (for directories: only file owner or root can delete files) (+1)
 Suffix:              not specified
 Symbolic:            rwsr-sr-t
 Numeric:             7755
@@ -67,8 +70,9 @@ Numeric:             7755
 ~
 [serr@lap]-> rights crw-rw----+
 File type:           character device
-Owner permissions:   read, write, no execute
-Group permissions:   read, write, no execute
+Special bits:        no suid, no sgid, no sticky
+Owner permissions:   read (+4), write (+2), no execute
+Group permissions:   read (+4), write (+2), no execute
 Others permissions:  no read, no write, no execute
 Suffix:              ACL present (Access Control Lists)
 Symbolic:            crw-rw----+
@@ -81,9 +85,10 @@ Numeric:             660
 ~
 [serr@lap]-> rights /
 File type:           directory
-Owner permissions:   read, write, execute
-Group permissions:   read, no write, execute
-Others permissions:  read, no write, execute
+Special bits:        no suid, no sgid, no sticky
+Owner permissions:   read (+4), write (+2), execute (+1)
+Group permissions:   read (+4), no write, execute (+1)
+Others permissions:  read (+4), no write, execute (+1)
 Suffix:              not specified
 Symbolic:            drwxr-xr-x
 Numeric:             755
@@ -93,8 +98,9 @@ Numeric:             755
 ~
 [serr@lap]-> rights /dev/video0
 File type:           character device
-Owner permissions:   read, write, no execute
-Group permissions:   read, write, no execute
+Special bits:        no suid, no sgid, no sticky
+Owner permissions:   read (+4), write (+2), no execute
+Group permissions:   read (+4), write (+2), no execute
 Others permissions:  no read, no write, no execute
 Suffix:              ACL present (Access Control Lists)
 Symbolic:            crw-rw----+
