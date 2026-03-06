@@ -121,6 +121,23 @@ r-x--x--x 511
 drwxrwxrwt 1777
 ```
 
+# Installation
+
+Just download somewhere
+
+```
+wget https://raw.githubusercontent.com/laserattack/rights/refs/heads/master/rights
+chmod +x rights
+```
+
+And use
+
+```
+./rights
+```
+
+Optionally, you can add the script to your PATH
+
 # Requirements
 
 - Perl 5.10 or newer
