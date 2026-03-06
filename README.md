@@ -115,7 +115,7 @@ Numeric:             660
 
 ```
 ~
-[serr@lap]-> ./rights -q 755 r-x--x--x /tmp
+[serr@lap]-> rights -q 755 r-x--x--x /tmp
 rwxr-xr-x 755
 r-x--x--x 511
 drwxrwxrwt 1777
