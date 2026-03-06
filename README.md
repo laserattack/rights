@@ -11,18 +11,19 @@ What is it : Linux file permissions explainer
 Usage      : rights [-hq] ARGUMENTS
 
 Flags:
-  -h  # Show this help message
-  -q  # Show only symbolic and numeric permissions without explanation
+  -h  Show this help message
+  -q  Show only symbolic and numeric permissions
+      without explanation, without file type and suffix
 
 Arguments:
-  Symbolic permissions  # rwxr-xr-x, rw-------, r-x--x--x
-  Numeric permissions   # 755, 644, 777, 600, 444
-  File/directory path   # /dev/video0, script.sh, /tmp
+  Symbolic permissions  rwxr-xr-x, rw-------, r-x--x--x
+  Numeric permissions   755, 644, 777, 600, 444
+  File/directory path   /dev/video0, script.sh, /tmp
 
 Examples:
-  rights 755            # Explain numeric permissions
-  rights rwxr-xr-x      # Explain symbolic permissions
-  rights /dev/video0    # Explain file permissions
+  rights 755            Explain numeric permissions
+  rights rwxr-xr-x      Explain symbolic permissions
+  rights /dev/video0    Explain file permissions
 ```
 
 # Examples
@@ -118,7 +119,7 @@ Numeric:             660
 [serr@lap]-> rights -q 755 r-x--x--x /tmp
 rwxr-xr-x 755
 r-x--x--x 511
-drwxrwxrwt 1777
+rwxrwxrwt 1777
 ```
 
 # Installation

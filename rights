@@ -26,18 +26,19 @@ sub usage {
     say "Usage      : rights [-hq] ARGUMENTS";
     say "";
     say "Flags:";
-    say "  -h  # Show this help message";
-    say "  -q  # Show only symbolic and numeric permissions without explanation";
+    say "  -h  Show this help message";
+    say "  -q  Show only symbolic and numeric permissions";
+    say "      without explanation, without file type and suffix";
     say "";
     say "Arguments:";
-    say "  Symbolic permissions  # rwxr-xr-x, rw-------, r-x--x--x";
-    say "  Numeric permissions   # 755, 644, 777, 600, 444";
-    say "  File/directory path   # /dev/video0, script.sh, /tmp";
+    say "  Symbolic permissions  rwxr-xr-x, rw-------, r-x--x--x";
+    say "  Numeric permissions   755, 644, 777, 600, 444";
+    say "  File/directory path   /dev/video0, script.sh, /tmp";
     say "";
     say "Examples:";
-    say "  rights 755            # Explain numeric permissions";
-    say "  rights rwxr-xr-x      # Explain symbolic permissions";
-    say "  rights /dev/video0    # Explain file permissions";
+    say "  rights 755            Explain numeric permissions";
+    say "  rights rwxr-xr-x      Explain symbolic permissions";
+    say "  rights /dev/video0    Explain file permissions";
 }
 
 sub explain_symbolic_perm {
@@ -71,11 +72,12 @@ sub explain_symbolic_perm {
     $oth_num += 2 if $oth_w eq 'w';
     $oth_num += 1 if $oth_x =~ /[xt]/;
 
-    my $symbolic = $type.$own_r.$own_w.$own_x.$grp_r.$grp_w.$grp_x.$oth_r.$oth_w.$oth_x.$suffix;
-    my $numeric  = $spc_num > 0 ? $spc_num.$own_num.$grp_num.$oth_num : $own_num.$grp_num.$oth_num;
+    my $symbolic_base = $own_r.$own_w.$own_x.$grp_r.$grp_w.$grp_x.$oth_r.$oth_w.$oth_x;
+    my $symbolic      = $type.$symbolic_base.$suffix;
+    my $numeric       = $spc_num > 0 ? $spc_num.$own_num.$grp_num.$oth_num : $own_num.$grp_num.$oth_num;
 
     if ($QUIET) {
-        printf "%s %s\n", $symbolic, $numeric;
+        printf "%s %s\n", $symbolic_base, $numeric;
         return;
     }
     
