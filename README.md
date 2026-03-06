@@ -8,17 +8,21 @@ A simple script to explain Linux file permissions in human-readable format
 
 ```
 What is it : Linux file permissions explainer
-Usage      : rights ARGUMENTS
+Usage      : rights [-hq] ARGUMENTS
+
+Flags:
+  -h  # Show this help message
+  -q  # Show only symbolic and numeric permissions without explanation
 
 Arguments:
-  Symbolic permissions : rwxr-xr-x, rw-------, r-x--x--x
-  Numeric permissions  : 755, 644, 777, 600, 444
-  File/directory path  : /dev/video0, script.sh, /tmp
+  Symbolic permissions  # rwxr-xr-x, rw-------, r-x--x--x
+  Numeric permissions   # 755, 644, 777, 600, 444
+  File/directory path   # /dev/video0, script.sh, /tmp
 
 Examples:
-  rights 755           # Explain numeric permissions
-  rights rwxr-xr-x     # Explain symbolic permissions
-  rights /dev/video0   # Explain file permissions
+  rights 755            # Explain numeric permissions
+  rights rwxr-xr-x      # Explain symbolic permissions
+  rights /dev/video0    # Explain file permissions
 ```
 
 # Examples
@@ -105,6 +109,16 @@ Others permissions:  no read, no write, no execute
 Suffix:              ACL present (Access Control Lists)
 Symbolic:            crw-rw----+
 Numeric:             660
+```
+
+## Quiet mode
+
+```
+~/projects/rights
+[serr@lap]-> ./rights -q 755 r-x--x--x /tmp
+rwxr-xr-x 755
+r-x--x--x 511
+drwxrwxrwt 1777
 ```
 
 # Requirements
